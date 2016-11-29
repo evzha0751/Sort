@@ -8,21 +8,22 @@ package bucketsort;
 import java.util.*;
 public class BucketSort {
 
-    public static void BucketSort(int[] a,int max){
-        int[] bucket = new int[max+1];
+    public static void BucketSort(int[] a,int max,int min){
+        int x=max-min;
+        int[] bucket = new int[x+1];
         
         for(int i=0;i<bucket.length;i++){
             bucket[i] = 0;
         }
         
         for(int i=0;i<a.length;i++){
-            bucket[a[i]]++;
+            bucket[a[i]-min]++;
         }
         
         int num1=0;
         for(int i=0;i<bucket.length;i++){
         for(int j=0;j<bucket[i];j++){
-            a[num1]=i;
+            a[num1]=i+min;
             num1++;
         }
     }
@@ -38,20 +39,24 @@ public class BucketSort {
         System.out.println("Please enter the number of array");
         number = input.nextInt();
         int[] num = new int[number];
-        int inputNumber,bucketNumber;
+        int inputNumber,x;
         
         for(int i=0;i<number;i++){
             inputNumber = input.nextInt();
             if(inputNumber>max){
                 max = inputNumber;
+            }else if(inputNumber<min){
+                min = inputNumber;
             }
             num[i]=inputNumber;
         }
         
+        
+        
         for(int i=0;i<num.length;i++){
             System.out.print(num[i]+" ");
         }
-        BucketSort(num,max);
+        BucketSort(num,max,min);
     }
     
 }
