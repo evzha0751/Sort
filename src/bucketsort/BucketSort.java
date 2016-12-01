@@ -9,29 +9,46 @@ import java.util.*;
 public class BucketSort {
 
     public static void BucketSort(int[] a,int max,int min){
-        int x=max-min;
-        int[] bucket = new int[x+1];
-        
-        for(int i=0;i<bucket.length;i++){
-            bucket[i] = 0;
+        int bucketCount =10;
+        int size = max/10+1;
+        int length = max-min+1;
+        Integer[][] bucket = new Integer[bucketCount][length];  
+        for (int i=0; i<a.length; i++){
+            int x = a[i]/size; 
+            for (int j=0; j<length; j++){
+                if (bucket[x][j]==null){
+                    bucket[x][j]=a[i]-min;
+                    break;
+                }
+            }
         }
-        
-        for(int i=0;i<a.length;i++){
-            bucket[a[i]-min]++;
-        }
-        
-        int num1=0;
-        for(int i=0;i<bucket.length;i++){
-        for(int j=0;j<bucket[i];j++){
-            a[num1]=i+min;
-            num1++;
-        }
-    }
-        
         System.out.println("");
-        for(int i=0;i<a.length;i++){
-            System.out.print(a[i]+" ");
+        for (int i=0;i<bucketCount;i++){
+            
+            
+            for (int j=1; j<length; j++){
+                if(bucket[i][j]==null){
+                    break;
+                }
+                int value = bucket[i][j];
+                int index=j;
+                while (index>0 && bucket[i][index-1]>value){
+                    bucket[i][index] = bucket[i][index-1];
+                    index--;
+                }
+                bucket[i][index] = value;
+            }
+            
+            
+            for(int j=0;j<length;j++){
+                if(bucket[i][j]==null){
+                    break;
+                }
+                    System.out.print(bucket[i][j]+min+" ");
+            }
         }
+        
+        
     }
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
